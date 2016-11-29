@@ -124,7 +124,8 @@ def _execute():
     all_pins = _all_pins()
     GPIO.output(_RCLK_pin, GPIO.LOW)
 
-    for pin in range(all_pins -1, -1, -1):
+    #for pin in range(all_pins -1, -1, -1):
+    for pin in range(0, all_pins -1, 1):
         GPIO.output(_SRCLK_pin, GPIO.LOW)
 
         pin_mode = _registers[pin]
