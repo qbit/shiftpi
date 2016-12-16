@@ -120,18 +120,26 @@ def _setPin(pin, mode):
     except IndexError:
         _registers.insert(pin, mode)
 
+def _e(pin):
+    GPIO.output(_SRCLK_pin, GPIO.LOW)
+
+    pin_mode = _registers[pin]
+
+    GPIO.output(_SER_pin, pin_mode)
+    GPIO.output(_SRCLK_pin, GPIO.HIGH)
+
 def _execute():
     all_pins = _all_pins()
     GPIO.output(_RCLK_pin, GPIO.LOW)
 
     #for pin in range(all_pins -1, -1, -1):
     for pin in range(0, all_pins -1, 1):
-        GPIO.output(_SRCLK_pin, GPIO.LOW)
-
-        pin_mode = _registers[pin]
-
-        GPIO.output(_SER_pin, pin_mode)
-        GPIO.output(_SRCLK_pin, GPIO.HIGH)
+        if pin == 30:
+            _e(pin)
+            pin += 1
+            _e(pin)
+            pin += 1
+        _e(pin)
 
     GPIO.output(_RCLK_pin, GPIO.HIGH)
 
